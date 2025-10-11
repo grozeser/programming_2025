@@ -1,15 +1,11 @@
-﻿
+
 #include <iostream>
 #include <bitset>
 
 using namespace std;
 
-
 //1
 
-
-
-/*
 int main() {
 
     short A;
@@ -26,36 +22,25 @@ int main() {
     if (bit == 0) {
         short B = A * A;
         B &= ~(1 << i);
-
         cout << i << endl;
-
+        
     }
     else {
         short C = 125;
+        C &= 0b10101010;
+        cout << i << endl;
 
-        switch (i)
-        case 0:
-        case 2:
-        case 4:
-        case 6:
-            for (int j = 0; j < 8; j += 2)
-                C &= ~(1 << j);
-
-            cout << C << endl;
-    
-            std::cout << A <<  " = " << std::bitset<8>(A) << std::endl;
+        cout << "A = " << A << bitset<8>(A) << endl;
+           
+        
     }
+    
 
-    return 0;
-}*/ 
 
 
 //2
 
  
-
-
-int main() {
     setlocale(LC_ALL, "Russian");
 
     int N;
@@ -63,8 +48,6 @@ int main() {
     cin >> N;
 
     switch (N) {
-
-
 
 
     case 113: cout << "КАЛИНИНГРАД – ЧАПАЕВО"; break;
@@ -83,11 +66,11 @@ int main() {
 
     case 141: cout << "КАЛИНИНГРАД – ЗЕЛЕНОГРАДСК"; break;
 
-    case 148: cout << "КАЛИНИНГРАД – БАГРАТИОНОВСК"; break;
+
+    case 148: 
+    case 191: cout << "КАЛИНИНГРАД – БАГРАТИОНОВСК"; break;
 
     case 161: cout << "КАЛИНИНГРАД – СВЕТЛОЕ"; break;
-
-    case 191: cout << "КАЛИНИНГРАД – БАГРАТИОНОВСК"; break;
 
     case 593: cout << "КАЛИНИНГРАД – МОРСКОЕ"; break;
 
@@ -101,4 +84,6 @@ int main() {
 
     return 0;
 }
+ 
+
  
