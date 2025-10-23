@@ -31,8 +31,9 @@ int main() {
         if (!B || a > max) {
             max = a;
             num = i;
+            B = true;
         }
-        B = true;
+        
     }
 
     if (!B) {
@@ -51,9 +52,10 @@ int main() {
     cout << "\nцелое число |X| < 1000: ";
     cin >> X;
 
-    
+
+    int Y = abs(X);
     int digits = 0;
-    int  Y = X;
+
     if (Y == 0) {
         digits = 1;
     }
@@ -65,7 +67,7 @@ int main() {
     }
 
     
-    int fDigit = X;
+    int fDigit = abs(X);
     if (fDigit == 0) {
         fDigit = 0;
     }
@@ -75,9 +77,9 @@ int main() {
             fDigit /= 10;
         } while (fDigit >= 10);
     }
-
     cout << "Количество разрядов = " << digits << endl;
     cout << "Первая цифра = " << fDigit << endl;
 
     return 0;
 }
+//vмодуль для отрицательных
