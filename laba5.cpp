@@ -1,102 +1,95 @@
 ﻿#include <iostream>
+#include <cmath>
+using namespace std;
 
-int Single(int digit) {
-    std::cout << "Используется функция замены 1 числа на противоположное" << std::endl;
-    return -digit;
+// Пункт 1
+
+int read(int a) {
+    cout << "исп. функция: противоположное число" << endl;
+    return -a;
 }
 
-int Double(int a, int b) {
-    std::cout << "Используется функция склейки двух чисел в порядке ввода" << std::endl;
+int read(int a, int b) {
+    cout << "исп. функция: склеивание 2-х чисел" << endl;
+
+    int digits = 0;
     int tmp = b;
-    int digits = 0;
-    if (tmp == 0) digits = 1; 
-    while (tmp > 0) {
-        tmp /= 10;
+    do {
         digits++;
-    }
-    int mult = 1;
+        tmp /= 10;
+    } while (tmp != 0);
+
+    int x = 1;
     for (int i = 0; i < digits; ++i) {
-        mult *= 10;
+        x *= 10;
     }
-    int result = a * mult + b;
-    return result;
+
+    return a * x + b;
 }
 
-int Triple(int a, int b, int c) {
-    std::cout << "Используется функция обработки трёх чисел" << std::endl;
-    int ab = Double(a, b);
-    int tmp = c;
-    int digits = 0;
-    if (tmp == 0) digits = 1;
-    while (tmp > 0) {
-        tmp /= 10;
-        digits++;
-    }
-    int mult = 1;
-    for (int i = 0; i < digits; ++i) {
-        mult *= 10;
-    }
-    int result = ab * mult + c;
-    return result;
+int read(int a, int b, int c) {
+    cout << "исп. функция: обработка 3-х чисел (0 = нет числа)" << endl;
+
+    if (a != 0 && b == 0 && c == 0)
+        return read(a);
+    else if (a == 0 && b != 0 && c == 0)
+        return read(b);
+    else if (a == 0 && b == 0 && c != 0)
+        return read(c);
+    else if (a != 0 && b != 0 && c == 0)
+        return read(a, b);
+    else if (a != 0 && b == 0 && c != 0)
+        return read(a, c);
+    else if (a == 0 && b != 0 && c != 0)
+        return read(b, c);
+    else
+        return read(read(a, b), c);
 }
+
+// Пункт 2 
+
+void geronF(int a, int b, int c) {
+    cout << "исп. функция: вычисление площади треугольника по формуле Герона" << endl;
+
+    if (a + b <= c || a + c <= b || b + c <= a) {
+        cout << "треугольник с такими сторонами не существует" << endl;
+        return;
+    }
+
+    double p = (a + b + c) / 2.0;
+    double S = sqrt(p * (p - a) * (p - b) * (p - c));
+
+    cout << "a = " << a << "b = " << b << "c = " << c << endl;
+    cout << "p = " << p << endl;
+    cout << "S = " << S << endl;
+}
+
 
 int main() {
     setlocale(LC_ALL, "Russian");
 
     int choice;
-    std::cout << "Введите номер пункта (1 или 2): ";
-    std::cin >> choice;
+    cout << "Введите номер пункта (1, 2): ";
+    cin >> choice;
 
     if (choice == 1) {
-        const int NMax = 3;
-        int numbers[NMax];
+        int a, b, c;
+        cout << "Введите три целых числа: ";
+        cin >> a >> b >> c;
 
-        std::cout << "Введите три числа (0 если числа нет): ";
-        for (int i = 0; i < NMax; ++i) {
-            std::cin >> numbers[i];
-        }
-
-        int count = 0;
-        for (int i = 0; i < NMax; ++i) {
-            if (numbers[i] != 0) count++;
-        }
-
-        int result = 0;
-        if (count == 1) {
-            for (int i = 0; i < NMax; ++i) {
-                if (numbers[i] != 0) {
-                    result = Single(numbers[i]);
-                    break;
-                }
-            }
-        }
-        else if (count == 2) {
-            int first = 0, second = 0, found = 0;
-            for (int i = 0; i < NMax; ++i) {
-                if (numbers[i] != 0) {
-                    if (found == 0) first = numbers[i];
-                    else second = numbers[i];
-                    found++;
-                }
-            }
-            result = Double(first, second);
-        }
-        else if (count == 3) {
-            result = Triple(numbers[0], numbers[1], numbers[2]);
-        }
-        else {
-            std::cout << "Нет чисел для обработки" << std::endl;
-            return 1;
-        }
-
-        std::cout << "Результат: " << result << std::endl;
+        int result = read(a, b, c);
+        cout << "Результат: " << result << endl;
     }
     else if (choice == 2) {
-        std::cout << "Пункт 2: Дополнительная функция" << std::endl;
+        int a, b, c;
+        cout << "Введите стороны треугольника (целые числа): ";
+        cin >> a >> b >> c;
+
+        geronF(a, b, c);
     }
     else {
-        std::cout << "Неверный пункт" << std::endl;
+        cout << "выбран неверный пункт" << endl;
     }
+
     return 0;
 }
-
