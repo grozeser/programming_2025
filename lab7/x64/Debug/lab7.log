@@ -1,0 +1,7 @@
+﻿  lab7.cpp
+C:\Users\Сергей\source\repos\lab7\lab7\lab7.cpp(41,42): warning C4267: аргумент: преобразование из "size_t" в "_Ty"; возможна потеря данных
+C:\Users\Сергей\source\repos\lab7\lab7\lab7.cpp(41,42): warning C4267:         with
+C:\Users\Сергей\source\repos\lab7\lab7\lab7.cpp(41,42): warning C4267:         [
+C:\Users\Сергей\source\repos\lab7\lab7\lab7.cpp(41,42): warning C4267:             _Ty=int
+C:\Users\Сергей\source\repos\lab7\lab7\lab7.cpp(41,42): warning C4267:         ]
+  lab7.vcxproj -> C:\Users\Сергей\source\repos\lab7\x64\Debug\lab7.exe
