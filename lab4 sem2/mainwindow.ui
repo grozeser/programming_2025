@@ -1,1 +1,62 @@
-
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect><x>0</x><y>0</y><width>600</width><height>400</height></rect>
+  </property>
+  <property name="windowTitle"><string>Работа с книгами</string></property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLineEdit" name="authorLineEdit">
+    <property name="geometry"><rect><x>20</x><y>20</y><width>200</width><height>25</height></rect></property>
+    <property name="placeholderText"><string>Автор (Иванов И.)</string></property>
+   </widget>
+   <widget class="QLineEdit" name="titleLineEdit">
+    <property name="geometry"><rect><x>20</x><y>60</y><width>200</width><height>25</height></rect></property>
+    <property name="placeholderText"><string>Название ("...")</string></property>
+   </widget>
+   <widget class="QLineEdit" name="codeLineEdit">
+    <property name="geometry"><rect><x>20</x><y>100</y><width>200</width><height>25</height></rect></property>
+    <property name="placeholderText"><string>Код (123-1234)</string></property>
+   </widget>
+   <widget class="QLineEdit" name="fillingLineEdit">
+    <property name="geometry"><rect><x>20</x><y>140</y><width>200</width><height>25</height></rect></property>
+    <property name="placeholderText"><string>Наполнение (2/1)</string></property>
+   </widget>
+   <widget class="QComboBox" name="typeComboBox">
+    <property name="geometry"><rect><x>250</x><y>20</y><width>150</width><height>25</height></rect></property>
+    <item><property name="text"><string>Бумажное</string></property></item>
+    <item><property name="text"><string>Электронное</string></property></item>
+   </widget>
+   <widget class="QComboBox" name="electronicComboBox">
+    <property name="geometry"><rect><x>250</x><y>60</y><width>150</width><height>25</height></rect></property>
+    <item><property name="text"><string>Да</string></property></item>
+    <item><property name="text"><string>Нет</string></property></item>
+   </widget>
+   <widget class="QCheckBox" name="detectiveCheckBox">
+    <property name="geometry"><rect><x>420</x><y>20</y><width>120</width><height>20</height></rect></property>
+    <property name="text"><string>Детектив</string></property>
+   </widget>
+   <widget class="QCheckBox" name="fantasyCheckBox">
+    <property name="geometry"><rect><x>420</x><y>50</y><width>120</width><height>20</height></rect></property>
+    <property name="text"><string>Фантастика</string></property>
+   </widget>
+   <widget class="QCheckBox" name="novelCheckBox">
+    <property name="geometry"><rect><x>420</x><y>80</y><width>120</width><height>20</height></rect></property>
+    <property name="text"><string>Роман</string></property>
+   </widget>
+   <widget class="QPushButton" name="resetButton">
+    <property name="geometry"><rect><x>150</x><y>200</y><width>100</width><height>40</height></rect></property>
+    <property name="text"><string>Сброс</string></property>
+   </widget>
+   <widget class="QPushButton" name="saveButton">
+    <property name="geometry"><rect><x>300</x><y>200</y><width>100</width><height>40</height></rect></property>
+    <property name="text"><string>Сохранить</string></property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar"/>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
