@@ -2,47 +2,43 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QCheckBox>
-#include <QComboBox>
-#include <QStringList>
+#include <QString>
 #include <QFile>
 #include <QTextStream>
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
-
-struct Book {
+class Book {
+public:
     QString author;
     QString title;
     QString code;
-    QString filling;
+    QString content;
     QString type;
-    QString electronic;
-    QStringList genres;
+    QString genres;
 
-    Book(const QString& a, const QString& t, const QString& c, const QString& f,
-         const QString& ty, const QString& e, const QStringList& g)
-        : author(a), title(t), code(c), filling(f), type(ty), electronic(e), genres(g) {}
+    Book(QString a, QString t, QString c, QString cont, QString ty, QString g)
+        : author(a), title(t), code(c), content(cont), type(ty), genres(g) {}
 
-    void saveToFile(const QString& filename) {
+    bool saveToFile(QString filename) {
         QFile file(filename);
-        if (file.open(QIODevice::Append | QIODevice::Text)) {
+        if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)) {
             QTextStream out(&file);
             out << "Автор: " << author << "\n";
             out << "Название: " << title << "\n";
             out << "Код: " << code << "\n";
-            out << "Наполнение: " << filling << "\n";
-            out << "Тип издания: " << type << "\n";
-            out << "Электронная версия: " << electronic << "\n";
-            out << "Жанры: " << genres.join(", ") << "\n";
+            out << "Наполнение: " << content << "\n";
+            out << "Тип: " << type << "\n";
+            out << "Жанры: " << (genres.isEmpty() ? "Нет" : genres) << "\n";
             out << "----------------------\n";
             file.close();
+            return true;
         }
+        return false;
     }
 };
+
+QT_BEGIN_NAMESPACE
+namespace Ui { class MainWindow; }
+QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
@@ -53,13 +49,10 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_resetButton_clicked();
-    void on_saveButton_clicked();
+    void on_pushButtonReset_clicked();
+    void on_pushButtonSave_clicked();
 
 private:
     Ui::MainWindow *ui;
-
-    bool validateFields(QString& errorField);
 };
-
-#endif 
+#endif
