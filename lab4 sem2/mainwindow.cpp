@@ -1,81 +1,108 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include <QFile>
-#include <QTextStream>
+#include "./ui_mainwindow.h"
 #include <QMessageBox>
 #include <QRegularExpression>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(ui->resetButton, &QPushButton::clicked, this, &MainWindow::on_resetButton_clicked);
-    connect(ui->saveButton, &QPushButton::clicked, this, &MainWindow::on_saveButton_clicked);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-void MainWindow::on_resetButton_clicked()
+
+// СБРОС
+void MainWindow::on_pushButtonReset_clicked()
 {
-    ui->authorLineEdit->clear();
-    ui->titleLineEdit->clear();
-    ui->codeLineEdit->clear();
-    ui->fillingLineEdit->clear();
-    ui->typeComboBox->setCurrentIndex(0);
-    ui->electronicComboBox->setCurrentIndex(0);
-    ui->detectiveCheckBox->setChecked(false);
-    ui->fantasyCheckBox->setChecked(false);
-    ui->novelCheckBox->setChecked(false);
+    ui->lineEditAuthor->clear();
+    ui->lineEditTitle->clear();
+    ui->lineEditCode->clear();
+    ui->lineEditContent->clear();
+
+    ui->radioPaper->setChecked(false);
+    ui->radioElectronic->setChecked(false);
+
+    ui->checkDetective->setChecked(false);
+    ui->checkFantasy->setChecked(false);
+    ui->checkNovel->setChecked(false);
 }
 
-bool MainWindow::validateFields(QString& errorField)
+// СОХРАНЕНИЕ
+void MainWindow::on_pushButtonSave_clicked()
 {
+    QString author = ui->lineEditAuthor->text().trimmed();
+    QString title = ui->lineEditTitle->text().trimmed();
+    QString code = ui->lineEditCode->text().trimmed();
+    QString content = ui->lineEditContent->text().trimmed();
 
-    QRegularExpression authorRe("^[А-Я][а-я]+\\s[А-Я][а-я]+$");
-    if (!authorRe.match(ui->authorLineEdit->text()).hasMatch()) { errorField = "Автор"; return false; }
-
-    QRegularExpression titleRe("^\".*\"$");
-    if (!titleRe.match(ui->titleLineEdit->text()).hasMatch()) { errorField = "Название"; return false; }
-
-    QRegularExpression codeRe("^\\d{3}-\\d{4}$");
-    if (!codeRe.match(ui->codeLineEdit->text()).hasMatch()) { errorField = "Код"; return false; }
-
-    QRegularExpression fillingRe("^(\\d+)/(\\d+)$");
-    QRegularExpressionMatch match = fillingRe.match(ui->fillingLineEdit->text());
-    if (!match.hasMatch()) { errorField = "Наполнение"; return false; }
-    int first = match.captured(1).toInt();
-    int second = match.captured(2).toInt();
-    if (second >= first) { errorField = "Наполнение"; return false; }
-
-    return true;
-}
-
-void MainWindow::on_saveButton_clicked()
-{
-    QString errorField;
-    if (!validateFields(errorField)) {
-        QMessageBox::warning(this, "Ошибка", "Ошибка в поле: " + errorField);
+    // Проверка пустоты
+    if (author.isEmpty() || title.isEmpty() || code.isEmpty() || content.isEmpty()) {
+        QMessageBox::warning(this, "Ошибка", "Все поля (кроме жанра) обязательны!");
         return;
     }
 
-    QStringList genres;
-    if (ui->detectiveCheckBox->isChecked()) genres << "Детектив";
-    if (ui->fantasyCheckBox->isChecked()) genres << "Фантастика";
-    if (ui->novelCheckBox->isChecked()) genres << "Роман";
+    // Автор: Клоц АН
+    QRegularExpression regAuthor("^[А-ЯЁ][а-яё]+\\s[А-ЯЁ]{1,2}$");
+    if (!regAuthor.match(author).hasMatch()) {
+        QMessageBox::warning(this, "Ошибка", "Автор: Пример 'Клоц АН'");
+        return;
+    }
 
-    Book b(
-        ui->authorLineEdit->text(),
-        ui->titleLineEdit->text(),
-        ui->codeLineEdit->text(),
-        ui->fillingLineEdit->text(),
-        ui->typeComboBox->currentText(),
-        ui->electronicComboBox->currentText(),
-        genres
-    );
+    // Название: "Выбор"
+    QRegularExpression regTitle("^\".+\"$");
+    if (!regTitle.match(title).hasMatch()) {
+        QMessageBox::warning(this, "Ошибка", "Название должно быть в кавычках!");
+        return;
+    }
 
-    b.saveToFile("result.txt");
-    QMessageBox::information(this, "Успех", "Данные успешно сохранены!");
+    // Код: 123-1234
+    QRegularExpression regCode("^\\d{3}-\\d{4,5}$");
+    if (!regCode.match(code).hasMatch()) {
+        QMessageBox::warning(this, "Ошибка", "Код: формат 123-1234");
+        return;
+    }
+
+    // Наполнение: 102/5 (второе < первого)
+    QRegularExpression regContent("^(\\d+)/(\\d+)$");
+    QRegularExpressionMatch match = regContent.match(content);
+
+    if (!match.hasMatch()) {
+        QMessageBox::warning(this, "Ошибка", "Наполнение: формат 10/2");
+        return;
+    }
+
+    int first = match.captured(1).toInt();
+    int second = match.captured(2).toInt();
+
+    if (second >= first) {
+        QMessageBox::warning(this, "Ошибка", "Второе число должно быть меньше первого!");
+        return;
+    }
+
+    // Тип
+    if (!ui->radioPaper->isChecked() && !ui->radioElectronic->isChecked()) {
+        QMessageBox::warning(this, "Ошибка", "Выберите тип издания!");
+        return;
+    }
+
+    QString type = ui->radioPaper->isChecked() ? "Бумажное" : "Электронное";
+
+    // Жанры (необязательные)
+    QStringList genresList;
+    if (ui->checkDetective->isChecked()) genresList << "Детектив";
+    if (ui->checkFantasy->isChecked()) genresList << "Фантастика";
+    if (ui->checkNovel->isChecked()) genresList << "Роман";
+
+    QString genres = genresList.join(", ");
+
+    Book book(author, title, code, content, type, genres);
+
+    if (book.saveToFile("..\\..\\result.txt")) {
+        QMessageBox::information(this, "Успех", "Сохранено!");
+    } else {
+        QMessageBox::critical(this, "Ошибка", "Ошибка записи файла!");
+    }
 }
