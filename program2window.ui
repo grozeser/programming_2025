@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Program2Window</class>
+ <widget class="QMainWindow" name="Program2Window">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>886</width>
+    <height>553</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Программа 2</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="btnLoad">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>490</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Загрузить .json</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>9</y>
+      <width>861</width>
+      <height>471</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="tablesLayout">
+     <item>
+      <widget class="QGroupBox" name="groupCorrect">
+       <property name="title">
+        <string>Корректные</string>
+       </property>
+       <layout class="QVBoxLayout" name="layoutCorrect">
+        <item>
+         <widget class="QTableWidget" name="tableCorrect">
+          <column>
+           <property name="text">
+            <string>Название</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Описание</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Коэф. защиты</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Тип защиты</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupError">
+       <property name="title">
+        <string>Ошибки</string>
+       </property>
+       <layout class="QVBoxLayout" name="layoutError">
+        <item>
+         <widget class="QTableWidget" name="tableError">
+          <column>
+           <property name="text">
+            <string>Название</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Описание</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Коэф. защиты</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Тип защиты</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
